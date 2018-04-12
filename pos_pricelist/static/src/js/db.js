@@ -107,12 +107,12 @@ odoo.define('pos_pricelist.DB', function (require) {
                 list.push(items[key]);
             }
             list.sort(function (a, b) {
+                if (parseInt(a.applied_on[0]) < parseInt(b.applied_on[0])) return -1;
+                if (parseInt(a.applied_on[0]) > parseInt(b.applied_on[0])) return 1;
                 if (a.sequence < b.sequence) return -1;
                 if (a.sequence > b.sequence) return 1;
                 if (a.min_quantity > b.min_quantity) return -1;
                 if (a.min_quantity < b.min_quantity) return 1;
-                if (parseInt(a.applied_on[0]) < parseInt(b.applied_on[0])) return -1;
-                if (parseInt(a.applied_on[0]) > parseInt(b.applied_on[0])) return 1;
                 return 0;
             });
             return list;

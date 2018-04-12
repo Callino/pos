@@ -179,7 +179,7 @@ odoo.define('pos_pricelist.models', function (require) {
             var taxtotal = 0;
             var taxdetail = {};
             var product_taxes = this.get_applicable_taxes_for_orderline();
-            var all_taxes = _(this.compute_all(product_taxes, base)).flatten();
+            var all_taxes = _(this.compute_all(product_taxes, base, 1)).flatten();
             _(all_taxes).each(function (tax) {
                 if (tax.price_include) {
                     totalNoTax -= tax.amount;
@@ -368,6 +368,7 @@ odoo.define('pos_pricelist.models', function (require) {
                 var item = db.pricelist_item_sorted[i];
                 if (
                     (item.product_tmpl_id === false || item.product_tmpl_id[0] === product.product_tmpl_id)
+                    && (item.product_id === false || item.product_id[0] === product.id)
                     && (item.categ_id === false || categ_ids.indexOf(item.categ_id[0]) !== -1)
                     && (
                         (!partner && item.pricelist_id && item.pricelist_id[0] === this.pos.config.pricelist_id[0])
